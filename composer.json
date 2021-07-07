@@ -1,0 +1,10 @@
+{
+    "name": "rogerio/fastparking-api",
+    "description": "fastparking API REST",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    }
+}
