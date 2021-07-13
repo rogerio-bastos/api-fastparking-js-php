@@ -67,6 +67,17 @@ class Router{
                     exit;
                 }
                 break;
+
+            case 'DELETE': 
+                $this->controllerMethod = 'delete';
+                if(isset($url[2]) && is_numeric($url[2])){
+                    $this->params = [$url[2]];
+                }else{
+                    http_response_code(400);
+                    echo json_encode(["erro" => "é necessário informar um id"]);
+                    exit;
+                }
+                break;
             
             default:
                 echo 'Método não suportado';

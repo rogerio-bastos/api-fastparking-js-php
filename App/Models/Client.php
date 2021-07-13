@@ -34,14 +34,23 @@ class Client{
 
         $stmt->bindValue(1, $id);
 
-        $stmt->execute();
-
-        if($stmt->rowCount() > 0){
+        if($stmt->execute()){
             $client = $stmt->fetch(\PDO::FETCH_OBJ);
 
-            return $client;
+            if(!$client){
+                return false;
+            }
+
+            $this->id = $client->id;
+            $this->name = $client->nome;
+            $this->placa = $client->placa;
+            $this->dia = $client->dia;
+            $this->hora = $client->hora;
+
+            return $this;
+            
         }else{
-            return null;
+            return false;
         }
     }
 
@@ -66,6 +75,16 @@ class Client{
         $stmt->bindValue(1, $this->name);
         $stmt->bindValue(2, $this->placa);
         $stmt->bindValue(3, $this->id);
+
+        return $stmt->execute();
+    }
+
+    public function delete(){
+        $sqlDelete = " DELETE FROM tbl_clients WHERE id = ? ";
+
+        $stmt = Model::getConnection()->prepare($sqlDelete);
+
+        $stmt->bindValue(1, $this->id);
 
         return $stmt->execute();
     }

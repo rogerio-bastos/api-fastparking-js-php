@@ -83,4 +83,20 @@ class Clients extends Controller{
         }
     }
 
+    public function delete($id){
+        $clientsModel = $this->model("Client");
+
+        $clientsModel = $clientsModel->findById($id);
+
+        if(!$clientsModel){
+            http_response_code(404);
+            echo json_encode(["erro" => "Cliente não encontrado."]);
+            exit;
+        }
+
+        $clientsModel->id = $id;
+
+        $clientsModel->delete();
+    }
+
 }
